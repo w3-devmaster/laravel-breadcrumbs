@@ -2,6 +2,7 @@
 
 namespace W3Devmaster\Breadcrumbs;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class BreadcrumbServiceProvider extends ServiceProvider
@@ -51,6 +52,15 @@ class BreadcrumbServiceProvider extends ServiceProvider
         if (file_exists($file = __DIR__ . '/Helpers.php')) {
             require $file;
         }
+    }
+
+    public function registerBladeDirective()
+    {
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'BreadcrumbScripts');
+
+        Blade::directive('BreadcrumbScripts', function () {
+            return "<?php echo 'Your Package Content'; ?>";
+        });
     }
 
 }
